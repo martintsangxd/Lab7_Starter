@@ -20,7 +20,7 @@ self.addEventListener('install', function (event) {
    event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('service wroker successfully installed')
+        console.log('Opened cache');
         return cache.addAll(recipes);
       })
   );
@@ -46,12 +46,16 @@ self.addEventListener('fetch', function (event) {
    * TODO - Part 2 Step 4
    * Create a function as outlined above
    */
-  event.respondWith(
+   console.log('service wroker serving assets')
+   event.respondWith(
     caches.match(event.request)
-      .then(function (response) {
-        if (response)
+      .then(function(response) {
+        // Cache hit - return response
+        if (response) {
           return response;
+        }
         return fetch(event.request);
-      })
-  )
+      }
+    )
+  );
 });
