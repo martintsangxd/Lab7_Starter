@@ -9,6 +9,7 @@ const recipes = ['https://introweb.tech/assets/json/ghostCookies.json',
 'https://introweb.tech/assets/json/turkey.json',
 'https://introweb.tech/assets/json/pumpkinPie.json'];
 
+//'/index.html','/sw.js','/assets/components/RecipeCard.js','./assets/components/RecipeExpand.js','./assets/styles/main.css','./assets/scripts/main.js','./assets/scripts/Router.js','favicon.ico']
 // Once the service worker has been installed, feed it some initial URLs to cache
 self.addEventListener('install', function (event) {
   /**
@@ -44,14 +45,11 @@ self.addEventListener('fetch', function (event) {
    * Create a function as outlined above
    */
    event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
+    caches.match(event.request).then(function (response) {
+      if (response) {
+        return response;
       }
-    )
+      return fetch(event.request);
+    })
   );
 });
